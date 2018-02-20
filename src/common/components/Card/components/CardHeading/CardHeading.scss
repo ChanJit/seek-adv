@@ -1,0 +1,12 @@
+@import '../../../../theme/theme';
+
+.root {
+  font-weight: $seek-font-weight-regular;
+  margin-top: ($grid-row-height * 2);
+  line-height: 27px;
+}
+
+.removeTopMargin {
+  @extend .root;
+  margin-top: 0;
+}

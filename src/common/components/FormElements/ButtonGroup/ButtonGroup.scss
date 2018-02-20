@@ -1,0 +1,57 @@
+@import '../../../theme/theme';
+
+.root {
+  user-select: none;
+  display: flex;
+  width: 100%;
+
+  @media screen and (min-width: $form-grow-max-width) {
+    width: auto;
+  }
+}
+
+.button {
+  @include formElementBorder();
+  border-left: none;
+  background: $seek-grey-light;
+  font-size: $seek-font-standard;
+  text-align: center;
+  padding: 13px 0 14px 0;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+
+  &:hover {
+    color: $seek-pink;
+  }
+
+  &:first-child {
+    border-left: 1px solid $seek-mid-grey-light;
+    border-radius: 2px 0 0 2px;
+  }
+
+  &:last-child {
+    border-radius: 0 2px 2px 0;
+  }
+
+  @media screen and (min-width: $form-grow-max-width) {
+    width: auto;
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+}
+
+.label {
+  display: block;
+  line-height: $grid-row-height * 3;
+  margin-top: $grid-row-height * 2;
+}
+
+.selected,
+.selected:hover {
+  @extend .button;
+  cursor: default;
+  background: $seek-white;
+  color: $seek-black;
+  border-bottom-color: $seek-pink;
+}

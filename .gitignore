@@ -1,0 +1,12 @@
+.env
+node_modules
+npm-debug.log
+joralocal-ui*.json
+coverage
+env
+dist
+package
+logs
+.idea
+.DS_Store
+data-migrations

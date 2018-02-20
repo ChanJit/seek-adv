@@ -1,0 +1,51 @@
+@import '../../../theme/theme';
+
+.root {}
+
+.shortField {
+  max-width: 120px;
+}
+
+.label {
+  display: block;
+  line-height: $grid-row-height * 3;
+  margin-top: $grid-row-height * 2;
+}
+
+.root:first-of-type .label {
+  margin-top: 0;
+}
+
+.input {
+  @include formElementBorder();
+  appearance: none;
+  user-select: text; //required to ensure input field text appears for older ios devices
+  padding: 12px 15px;
+  width: 100%;
+  max-width: $form-grow-max-width;
+  font-size: $seek-font-standard;
+  font-weight: $seek-font-weight-light;
+  resize: vertical;
+
+  &:focus {
+    @include formElementFocusState();
+  }
+}
+
+.forceFocus {
+  @extend .input;
+  @include formElementFocusState();
+}
+
+.inputInvalid {
+  @extend .input;
+  @include formElementInvalidState();
+
+  &:focus {
+    @include formElementFocusState();
+  }
+}
+
+.extraRightPadding {
+  padding-right: 34px;
+}

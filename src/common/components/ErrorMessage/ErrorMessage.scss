@@ -1,0 +1,42 @@
+@import '../../theme/theme';
+
+.root {
+  color: $seek-error;
+  font-size: $seek-font-small;
+  margin: ($grid-row-height / 2) 0;
+  line-height: 18px;
+}
+
+.outsideCard {
+  @extend .root;
+
+  font-weight: $seek-font-weight-light;
+  font-size: $seek-font-small;
+
+  padding: 0 $small-device-padding 0 $small-device-padding;
+
+  @media screen and (min-width: $form-grow-max-width) {
+    padding-left: $medium-device-padding;
+    padding-right: $medium-device-padding;
+  }
+}
+
+.extraTopMargin {
+  margin-top: $grid-row-height * 2;
+}
+
+.errorItem {
+  margin-top: $grid-row-height * 2;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.icon {
+  @include formValidationIcon();
+}
+
+.errorText {
+  @include formValidationText();
+}

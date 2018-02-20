@@ -1,0 +1,28 @@
+@import '../../theme/theme';
+
+.seekAdvContainer {
+  margin: 0 auto;
+  width: 500px;
+
+  .seekAdvButton{
+    width: 33%;
+    margin: 30px 10px;
+  }
+
+  .errorMessage{
+    width: 100%;
+    margin: 5px 0px;
+  }
+}
+
+.jobAdvs{
+  margin: 10px 10px;
+}
+.alignRight{
+  right: 10px;
+}
+
+.total{
+  margin: 10px 10px;
+  color: $seek-black;
+}

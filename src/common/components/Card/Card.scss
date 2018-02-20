@@ -1,0 +1,13 @@
+@import '../../theme/theme';
+
+.root {
+  background: $seek-white;
+  padding: 26px $small-device-padding 36px $small-device-padding;
+  font-weight: $seek-font-weight-light;
+  position: relative;
+
+  @media screen and (min-width: $form-grow-max-width) {
+    padding-left: $medium-device-padding;
+    padding-right: $medium-device-padding;
+  }
+}

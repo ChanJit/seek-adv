@@ -1,0 +1,51 @@
+@import './common/theme/theme';
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400);
+
+:global {
+  @import './common/theme/reset/reset.css';
+
+  html {
+    font-family: $base-font-stack;
+    font-weight: $seek-font-weight-regular;
+    font-size: $base-font-size;
+    background-color: $seek-mid-grey-light;
+    box-sizing: border-box;
+    min-height: 100%;
+    width: 100%;
+    text-size-adjust: 100%; /* Prevent font scaling in landscape mobile view */
+  }
+
+  *,
+  *:before,
+  *:after {
+    font-family: inherit;
+    box-sizing: border-box;
+  }
+
+  *:focus {
+    outline: $seek-focus solid 1px;
+    outline-offset: 2px;
+    z-index: 3000;
+  }
+
+  input {
+    margin: 0;
+  }
+
+  body {
+    margin: 0;
+    font-size: $seek-font-small;
+    min-height: 100%;
+    width: 100%;
+  }
+
+  a {
+    color: $seek-link;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}

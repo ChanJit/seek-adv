@@ -1,0 +1,20 @@
+@import '../../../theme/theme';
+
+.root {
+  color: $seek-error;
+  font-size: $seek-font-small;
+  margin: ($grid-row-height / 2) 0;
+}
+
+.extraTopMargin {
+  @extend .root;
+  margin-top: $grid-row-height * 2;
+}
+
+.icon {
+  @include formValidationIcon();
+}
+
+.errorText {
+  @include formValidationText();
+}

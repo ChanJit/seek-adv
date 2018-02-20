@@ -1,0 +1,26 @@
+@import '../palette/colours';
+
+@mixin hideSelectionFormElement() {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+@mixin formElementBorder() {
+  border: 1px solid $seek-mid-grey-light;
+  border-radius: 0;
+}
+
+@mixin formElementInvalidState() {
+  border: 1px solid $seek-error;
+}
+
+@mixin formElementFocusState() {
+  outline: 0;
+  border: 1px solid $seek-mid-grey-dark;
+}

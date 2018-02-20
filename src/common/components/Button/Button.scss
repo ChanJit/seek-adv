@@ -1,0 +1,84 @@
+@import '../../theme/theme';
+
+.button {
+  //reset browser button styles
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  user-select: none;
+
+  font-size: $seek-font-standard;
+  padding: 13px 30px;
+  border-radius: 2px;
+  text-align: center;
+  box-shadow: 0 1px 1px 0 rgba($seek-black, 0.7);
+  cursor: pointer;
+  transition: background-color 0.2s, transform .2s cubic-bezier(0.020, 1.505, 0.745, 1.235);
+  width: calc(100% - #{$small-device-padding * 2});
+  margin: ($grid-row-height * 2) $small-device-padding 0 $small-device-padding;
+  display: inline-block;
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  @media screen and (min-width: $form-grow-max-width) {
+    width: auto;
+    margin-left: $medium-device-padding;
+    margin-right: $medium-device-padding;
+  }
+}
+
+.insideCard {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+
+  @media screen and (min-width: $form-grow-max-width) {
+    width: auto;
+  }
+}
+
+.primary {
+  @extend .button;
+  color: $seek-white;
+  background-color: $seek-pink;
+
+  &:hover {
+    color: $seek-white;
+    text-decoration: none;
+    background: lighten($seek-pink, 5%);
+    box-shadow: 0 1px 1px 0 rgba($seek-black, 0.4);
+  }
+
+  &:active {
+    color: $seek-white;
+    text-decoration: none;
+    background: darken($seek-pink, 5%);
+    box-shadow: none;
+  }
+}
+
+.secondary {
+  @extend .button;
+  color: $seek-black;
+  background-color: $seek-mid-grey-light;
+
+  &:hover {
+    color: $seek-black;
+    text-decoration: none;
+    background: lighten($seek-mid-grey-light, 5%);
+    box-shadow: 0 1px 1px 0 rgba($seek-black, 0.4);
+  }
+
+  &:active {
+    color: $seek-black;
+    text-decoration: none;
+    background: darken($seek-mid-grey-light, 5%);
+    box-shadow: none;
+  }
+}

@@ -1,0 +1,19 @@
+@import '../typography/type';
+
+$validation-icon-margin: 5px;
+
+@mixin formValidationIcon() {
+  display: inline-block;
+  vertical-align: top;
+  background: url(/images/icons/validation-error.svg);
+  height: $seek-font-small;
+  width: $seek-font-small;
+  background-size: contain;
+  margin: 1px $validation-icon-margin 0 0;
+}
+
+@mixin formValidationText() {
+  display: inline-block;
+  width: calc(100% - (#{$seek-font-small} + #{$validation-icon-margin}));
+  line-height: 18px;
+}

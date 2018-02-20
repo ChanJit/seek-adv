@@ -1,0 +1,19 @@
+@import '../../theme/theme';
+
+.root {
+  font-size: $seek-font-standard;
+  line-height: 27px;
+  padding: 24px $small-device-padding 12px $small-device-padding;
+
+  @media screen and (min-width: $form-grow-max-width) {
+    padding-left: $medium-device-padding;
+    padding-right: $medium-device-padding;
+  }
+}
+
+.subHeading {
+  margin-top: 2px;
+  margin-bottom: -2px;
+  font-weight: $seek-font-weight-light;
+  font-size: $seek-font-small;
+}
