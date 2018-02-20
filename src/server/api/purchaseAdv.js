@@ -1,6 +1,7 @@
 import config from '../serverConfig';
 import validator from '../validators/purchaseValidator';
 import promotionFunction from '../utilities/promotionFunction';
+import promotionPackage from '../utilities/promotionPackage';
 
 function calculateBaseOnAdvType({ advs }) {
   const advTypeMap = {};
@@ -37,14 +38,14 @@ export default async function purchaseAdv(req, res) {
     let grandTotal = 0;
 
     for (const advType in advTypeMap) {
-      const companyPackage = config.promotionPackage[companyName];
+      const companyPackage = promotionPackage[companyName];
 
       grandTotal += companyPackage && companyPackage[advType] ?
         runPromotionFunction({ promotionType: Object.keys(companyPackage[advType])[0], companyAdvPackage: companyPackage[advType], originalPriceModule: advTypeMap[advType] }) :
         promotionFunction.getTotalOriginalPrice({ ...advTypeMap[advType] });
     }
 
-    return res.status(200).send({ grandTotal: parseFloat(Math.round(grandTotal * 100) / 100).toFixed(2) });
+    return res.status(200).send({ grandTotal: parseFloat((Math.round(grandTotal * 100) / 100).toFixed(2)) });
   } catch (err) {
     return res.status(400).send({ ...err });
   }
