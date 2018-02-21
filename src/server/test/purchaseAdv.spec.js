@@ -83,7 +83,26 @@ describe('purchaseAdv api', () => {
         });
 
         it('returns grand total value', () => {
-          expect(response.body).to.deep.equal({ 'grandTotal': 987.97 });
+          expect(response.body).to.deep.equal({
+            'advTypeMap': {
+              'classic': {
+                'currentUnitPrice': 269.99,
+                'originalPrice': 269.99,
+                'total': 1
+              },
+              'premium': {
+                'currentUnitPrice': 394.99,
+                'originalPrice': 394.99,
+                'total': 1
+              },
+              'standout': {
+                'currentUnitPrice': 322.99,
+                'originalPrice': 322.99,
+                'total': 1
+              }
+            },
+            'grandTotal': 987.97
+          });
         });
       });
       describe('company with bundle package', () => {
@@ -96,7 +115,16 @@ describe('purchaseAdv api', () => {
         });
 
         it('returns grand total value', () => {
-          expect(response.body).to.deep.equal({ 'grandTotal': 1349.95 });
+          expect(response.body).to.deep.equal({
+            'advTypeMap': {
+              'classic': {
+                'currentUnitPrice': 192.85,
+                'originalPrice': 269.99,
+                'total': 7
+              }
+            },
+            'grandTotal': 1349.95
+          });
         });
       });
       describe('company with cheaperForMore package', () => {
@@ -109,7 +137,16 @@ describe('purchaseAdv api', () => {
         });
 
         it('returns grand total value', () => {
-          expect(response.body).to.deep.equal({ 'grandTotal': 1519.96 });
+          expect(response.body).to.deep.equal({
+            'advTypeMap': {
+              'premium': {
+                'currentUnitPrice': 379.99,
+                'originalPrice': 394.99,
+                'total': 4
+              }
+            },
+            'grandTotal': 1519.96
+          });
         });
       });
       describe('company with specialPrice package', () => {
@@ -122,7 +159,16 @@ describe('purchaseAdv api', () => {
         });
 
         it('returns grand total value', () => {
-          expect(response.body).to.deep.equal({ 'grandTotal': 599.98 });
+          expect(response.body).to.deep.equal({
+            'advTypeMap': {
+              'standout': {
+                'currentUnitPrice': 299.99,
+                'originalPrice': 322.99,
+                'total': 2
+              }
+            },
+            'grandTotal': 599.98
+          });
         });
       });
       describe('company with all package', () => {
@@ -135,7 +181,26 @@ describe('purchaseAdv api', () => {
         });
 
         it('returns grand total value', () => {
-          expect(response.body).to.deep.equal({ 'grandTotal': 2949.91 });
+          expect(response.body).to.deep.equal({
+            'advTypeMap': {
+              'classic': {
+                'currentUnitPrice': 215.99,
+                'originalPrice': 269.99,
+                'total': 5
+              },
+              'premium': {
+                'currentUnitPrice': 389.99,
+                'originalPrice': 394.99,
+                'total': 4
+              },
+              'standout': {
+                'currentUnitPrice': 309.99,
+                'originalPrice': 322.99,
+                'total': 1
+              }
+            },
+            'grandTotal': 2949.91
+          });
         });
       });
     });

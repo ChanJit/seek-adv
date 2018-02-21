@@ -36,13 +36,14 @@ const validate = data => {
   {
     pushRoute: routeActions.push,
     addJobPost: postAdv.addJobPost,
-    getTotal: postAdv.getTotal
+    removeJobPost: postAdv.removeJobPost
   }
 )
 
 class AddJobPost extends Component {
 
   static propTypes = {
+    removeJobPost: PropTypes.func.isRequired,
     addJobPost: PropTypes.func.isRequired,
     pushRoute: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
@@ -58,9 +59,13 @@ class AddJobPost extends Component {
   }
 
   async onAdd(jobPost) {
-    const { addJobPost, getTotal } = this.props;
+    const { addJobPost } = this.props;
     await addJobPost(jobPost);
-    await getTotal();
+  }
+
+  async onRemove(index) {
+    const { removeJobPost } = this.props;
+    await removeJobPost(index);
   }
 
   async onBack() {
@@ -73,14 +78,14 @@ class AddJobPost extends Component {
   }
 
   render() {
-    const { postAdv: { companyName, advs, processing, error, grandTotal }, handleSubmit, submitting } = this.props;
+    const { postAdv: { companyName, advs, calculateProcessing, calculateError, grandTotal, advTypeMap }, handleSubmit, submitting } = this.props;
     const validationMessages = validationConstants.SEEK_ADV_VALIDATION_MESSAGES.ADD_JOB_POST;
 
     const jobTypeOptions = [{ label: 'Classic', key: 'classic' }, { label: 'Stand Out', key: 'standout' }, { label: 'Premium', key: 'premium' }];
 
-    if (processing) {
-      return (<Spinner delay={0} size="80" fullPageOverlay />);
-    }
+    // if (calculateProcessing) {
+    //   return (<Spinner delay={0} size="80" fullPageOverlay />);
+    // }
 
     return (
       <div>
@@ -111,10 +116,6 @@ class AddJobPost extends Component {
                 fieldId="jobDescription"
                 validationMessages={validationMessages.JOB_DESCRIPTION} />
 
-              <ErrorMessage className={styles.errorMessage}>
-                {error ? (error || []).map((error, index) => <span key={index}>{error}</span>) : null}
-              </ErrorMessage>
-
               <Button className={styles.seekAdvButton} disabled={submitting} type="submit">Add</Button>
               <Button className={styles.seekAdvButton} secondary onClick={this.onBack.bind(this)}>Back</Button>
 
@@ -127,15 +128,25 @@ class AddJobPost extends Component {
           </Card>
         </Form>
         {
-          advs ? advs.map((adv, index) =>
+          !calculateError && advs ? advs.map((adv, index) =>
             <Card key={index} className={styles.jobAdvs}>
               <div>
-                {adv.jobTitle} ({adv.advType})
+                <span className={styles.jobTitle}>{adv.jobTitle} ({adv.advType})</span> {
+                  advTypeMap[adv.advType].currentUnitPrice !== advTypeMap[adv.advType].originalPrice ?
+                    <span>
+                      <strike><span className={styles.originalPriceWithStrike}>{advTypeMap[adv.advType].originalPrice}</span></strike> <span className={styles.discountPrice}>{advTypeMap[adv.advType].currentUnitPrice}</span>
+                    </span> :
+                    <span className={styles.originalPrice}>{advTypeMap[adv.advType].originalPrice}</span>
+                }
+                <Button className={styles.seekAdvButton} secondary onClick={this.onRemove.bind(this, index)}> Delete </Button>
                 <br /><hr />
-                {adv.jobDescription}
+                <span className={styles.jobDescription}>{adv.jobDescription}</span>
               </div>
             </Card>) : null
         }
+        <ErrorMessage className={styles.errorMessage}>
+          {calculateError ? (calculateError || []).map((error, index) => <span key={index}>{error}</span>) : null}
+        </ErrorMessage>
       </div>
     );
   }

@@ -18,14 +18,14 @@ function renderFullPage(html, initialState) {
     <html lang="en">
       <head>
         <title>Seek Adv</title>
-        <link rel="stylesheet" type="text/css" href="style.css?v=${process.env.BUILD_NUMBER}" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
       </head>
       <body>
         <div id="app">${html}</div>
         <script>
           window.__INITIAL_STATE__ = ${serialize(initialState)}
         </script>
-        <script src="/bundle.js?v=${process.env.BUILD_NUMBER}"></script>
+        <script src="/bundle.js"></script>
       </body>
     </html>`;
 }
@@ -89,9 +89,14 @@ export default function handleRender(req, res) {
           return;
         }
 
-        res
+        try {
+          res
           .status(isNotFound ? 404 : 200)
           .send(renderFullPage(html, store.getState()));
+        } catch (ex) {
+          //doing nothing
+        }
+        
       }
     }
   );

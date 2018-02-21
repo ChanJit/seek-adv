@@ -22,6 +22,10 @@ function runPromotionFunction({ promotionType, originalPriceModule, companyAdvPa
     promotionFunction.getTotalOriginalPrice({ ...originalPriceModule });
 }
 
+function convertToTwoDecimal(number) {
+  return parseFloat((Math.round(number * 100) / 100).toFixed(2));
+}
+
 export default async function purchaseAdv(req, res) {
   const { body } = req;
 
@@ -39,13 +43,21 @@ export default async function purchaseAdv(req, res) {
 
     for (const advType in advTypeMap) {
       const companyPackage = promotionPackage[companyName];
+      let total = 0;
 
-      grandTotal += companyPackage && companyPackage[advType] ?
-        runPromotionFunction({ promotionType: Object.keys(companyPackage[advType])[0], companyAdvPackage: companyPackage[advType], originalPriceModule: advTypeMap[advType] }) :
-        promotionFunction.getTotalOriginalPrice({ ...advTypeMap[advType] });
+      if (companyPackage && companyPackage[advType]) {
+        total = runPromotionFunction({ promotionType: Object.keys(companyPackage[advType])[0], companyAdvPackage: companyPackage[advType], originalPriceModule: advTypeMap[advType] });
+      } else {
+        total = promotionFunction.getTotalOriginalPrice({ ...advTypeMap[advType] });
+      }
+
+      advTypeMap[advType].currentUnitPrice = convertToTwoDecimal(total / advTypeMap[advType].total);
+      grandTotal += total;
     }
 
-    return res.status(200).send({ grandTotal: parseFloat((Math.round(grandTotal * 100) / 100).toFixed(2)) });
+    grandTotal = convertToTwoDecimal(grandTotal);
+
+    return res.status(200).send({ grandTotal, advTypeMap });
   } catch (err) {
     return res.status(400).send({ ...err });
   }

@@ -23,6 +23,37 @@
 }
 
 .total{
+  font-weight: $seek-font-weight-regular;
+  font-size: $seek-font-large;
   margin: 10px 10px;
-  color: $seek-black;
+  color:$seek-blue;
+}
+
+.originalPriceWithStrike{
+  font-weight: $seek-font-weight-light;
+  font-size: $seek-font-standard;
+  color:$seek-blue;
+}
+
+.originalPrice{
+  font-weight: $seek-font-weight-regular;
+  font-size: $seek-font-large;
+  color:$seek-blue;
+}
+
+.discountPrice{
+  font-weight: $seek-font-weight-regular;
+  font-size: $seek-font-large;
+  color:$seek-pink;
+}
+
+.jobTitle{
+  font-weight: $seek-font-weight-regular;
+  font-size: $seek-font-large;
+  color:$seek-blue;
+}
+.jobDescription{
+  font-weight: $seek-font-weight-light;
+  font-size: $seek-font-standard;
+  color:$seek-black;
 }
