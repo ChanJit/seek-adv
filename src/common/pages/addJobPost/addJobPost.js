@@ -9,7 +9,7 @@ import * as validationConstants from '../../constants/validation';
 import Card from '../../components/Card/Card';
 import Form from '../../components/Form/Form';
 import Button from '../../components/Button/Button';
-import Spinner from '../../components/Spinner/Spinner';
+// import Spinner from '../../components/Spinner/Spinner';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import ScreenHeading from '../../components/ScreenHeading/ScreenHeading';
 import InputField from '../../components/FormElements/InputField/InputField';
@@ -78,12 +78,12 @@ class AddJobPost extends Component {
   }
 
   render() {
-    const { postAdv: { companyName, advs, calculateProcessing, calculateError, grandTotal, advTypeMap }, handleSubmit, submitting } = this.props;
+    const { postAdv: { companyName, advs, calculateError, grandTotal, advTypeMap }, handleSubmit, submitting } = this.props;
     const validationMessages = validationConstants.SEEK_ADV_VALIDATION_MESSAGES.ADD_JOB_POST;
 
     const jobTypeOptions = [{ label: 'Classic', key: 'classic' }, { label: 'Stand Out', key: 'standout' }, { label: 'Premium', key: 'premium' }];
 
-    // if (calculateProcessing) {
+    // if (this.props.postAdv.calculateProcessing) {
     //   return (<Spinner delay={0} size="80" fullPageOverlay />);
     // }
 
@@ -121,7 +121,7 @@ class AddJobPost extends Component {
 
               <div>
                 {
-                  grandTotal ? <span className={styles.total}>Total Fees : {grandTotal}</span> : null
+                  grandTotal ? <span className={styles.total}>Total Advertisement Fees : {grandTotal}</span> : null
                 }
               </div>
             </div>
