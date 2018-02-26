@@ -86,19 +86,22 @@ describe('purchaseAdv api', () => {
           expect(response.body).to.deep.equal({
             'advTypeMap': {
               'classic': {
-                'currentUnitPrice': 269.99,
                 'originalPrice': 269.99,
-                'total': 1
+                'totalUnit': 1,
+                'total': 269.99,
+                'discountPrice': 269.99
               },
               'premium': {
-                'currentUnitPrice': 394.99,
+                'discountPrice': 394.99,
                 'originalPrice': 394.99,
-                'total': 1
+                'total': 394.99,
+                'totalUnit': 1
               },
               'standout': {
-                'currentUnitPrice': 322.99,
+                'discountPrice': 322.99,
                 'originalPrice': 322.99,
-                'total': 1
+                'total': 322.99,
+                'totalUnit': 1
               }
             },
             'grandTotal': 987.97
@@ -118,9 +121,12 @@ describe('purchaseAdv api', () => {
           expect(response.body).to.deep.equal({
             'advTypeMap': {
               'classic': {
-                'currentUnitPrice': 192.85,
+                'discountPrice': 179.99,
                 'originalPrice': 269.99,
-                'total': 7
+                'total': 1349.95,
+                'totalUnit': 7,
+                'type': 'bundle',
+                'originalPriceUnit': 1
               }
             },
             'grandTotal': 1349.95
@@ -140,9 +146,11 @@ describe('purchaseAdv api', () => {
           expect(response.body).to.deep.equal({
             'advTypeMap': {
               'premium': {
-                'currentUnitPrice': 379.99,
+                'discountPrice': 379.99,
                 'originalPrice': 394.99,
-                'total': 4
+                'total': 1519.96,
+                'totalUnit': 4,
+                'type': 'cheaperForMore'
               }
             },
             'grandTotal': 1519.96
@@ -162,9 +170,11 @@ describe('purchaseAdv api', () => {
           expect(response.body).to.deep.equal({
             'advTypeMap': {
               'standout': {
-                'currentUnitPrice': 299.99,
+                'discountPrice': 299.99,
                 'originalPrice': 322.99,
-                'total': 2
+                'total': 599.98,
+                'totalUnit': 2,
+                'type': 'specialPrice'
               }
             },
             'grandTotal': 599.98
@@ -184,19 +194,26 @@ describe('purchaseAdv api', () => {
           expect(response.body).to.deep.equal({
             'advTypeMap': {
               'classic': {
-                'currentUnitPrice': 215.99,
+                'discountPrice': 215.99,
                 'originalPrice': 269.99,
-                'total': 5
+                'originalPriceUnit': 0,
+                'total': 1079.96,
+                'totalUnit': 5,
+                'type': 'bundle'
               },
               'premium': {
-                'currentUnitPrice': 389.99,
+                'discountPrice': 389.99,
                 'originalPrice': 394.99,
-                'total': 4
+                'total': 1559.96,
+                'totalUnit': 4,
+                'type': 'cheaperForMore'
               },
               'standout': {
-                'currentUnitPrice': 309.99,
+                'discountPrice': 309.99,
                 'originalPrice': 322.99,
-                'total': 1
+                'total': 309.99,
+                'totalUnit': 1,
+                'type': 'specialPrice'
               }
             },
             'grandTotal': 2949.91

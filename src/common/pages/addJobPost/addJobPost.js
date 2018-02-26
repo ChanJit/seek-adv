@@ -77,6 +77,44 @@ class AddJobPost extends Component {
   async onJobTypeChange() {
   }
 
+  renderOriginalPrice(advDetail) {
+    return (<span className={styles.originalPrice}>{advDetail.originalPrice}</span>);
+  }
+
+  renderDiscountPrice(advDetail) {
+    return (
+      <span>
+        <strike><span className={styles.originalPriceWithStrike}>{advDetail.originalPrice}</span></strike> <span className={styles.discountPrice}>{advDetail.discountPrice}</span>
+      </span>
+    );
+  }
+
+  filterSameAdvType(adv) {
+    if (adv.advType === this.advType) {
+      return true;
+    }
+    return false;
+  }
+
+  renderPrice({ advDetail, advs, index }) {
+    if (advDetail) {
+      if (!advDetail.originalPriceUnit || (advDetail.originalPriceUnit && advDetail.originalPriceUnit === 0)) {
+        return (
+          advDetail.discountPrice !== advDetail.originalPrice ?
+            this.renderDiscountPrice(advDetail) :
+            this.renderOriginalPrice(advDetail)
+        );
+      }
+
+      return (
+        (advs.slice(0, index + 1).filter(this.filterSameAdvType, advs[index]).length <= advDetail.originalPriceUnit) ?
+          this.renderOriginalPrice(advDetail) :
+          this.renderDiscountPrice(advDetail)
+      );
+    }
+    return null;
+  }
+
   render() {
     const { postAdv: { companyName, advs, calculateError, grandTotal, advTypeMap }, handleSubmit, submitting } = this.props;
     const validationMessages = validationConstants.SEEK_ADV_VALIDATION_MESSAGES.ADD_JOB_POST;
@@ -128,15 +166,11 @@ class AddJobPost extends Component {
           </Card>
         </Form>
         {
-          !calculateError && advs ? advs.map((adv, index) =>
+          !calculateError && advs && advTypeMap ? advs.map((adv, index) =>
             <Card key={index} className={styles.jobAdvs}>
               <div>
                 <span className={styles.jobTitle}>{adv.jobTitle} ({adv.advType})</span> {
-                  advTypeMap[adv.advType].currentUnitPrice !== advTypeMap[adv.advType].originalPrice ?
-                    <span>
-                      <strike><span className={styles.originalPriceWithStrike}>{advTypeMap[adv.advType].originalPrice}</span></strike> <span className={styles.discountPrice}>{advTypeMap[adv.advType].currentUnitPrice}</span>
-                    </span> :
-                    <span className={styles.originalPrice}>{advTypeMap[adv.advType].originalPrice}</span>
+                  this.renderPrice({ advDetail: advTypeMap[adv.advType], advs, index })
                 }
                 <Button className={styles.seekAdvButton} secondary onClick={this.onRemove.bind(this, index)}> Delete </Button>
                 <br /><hr />

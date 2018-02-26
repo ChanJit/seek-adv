@@ -10,7 +10,7 @@ function calculateBaseOnAdvType({ advs }) {
     if (!advTypeMap[advType]) {
       advTypeMap[advType] = {};
     }
-    advTypeMap[advType].total = (advTypeMap[advType].total ? advTypeMap[advType].total + 1 : 1);
+    advTypeMap[advType].totalUnit = (advTypeMap[advType].totalUnit ? advTypeMap[advType].totalUnit + 1 : 1);
     advTypeMap[advType].originalPrice = config.advPrice[advType];
   }
   return advTypeMap;
@@ -20,10 +20,6 @@ function runPromotionFunction({ promotionType, originalPriceModule, companyAdvPa
   return promotionType && promotionFunction[promotionType] ?
     promotionFunction[promotionType]({ ...originalPriceModule, statement: companyAdvPackage[promotionType] }) :
     promotionFunction.getTotalOriginalPrice({ ...originalPriceModule });
-}
-
-function convertToTwoDecimal(number) {
-  return parseFloat((Math.round(number * 100) / 100).toFixed(2));
 }
 
 export default async function purchaseAdv(req, res) {
@@ -43,19 +39,23 @@ export default async function purchaseAdv(req, res) {
 
     for (const advType in advTypeMap) {
       const companyPackage = promotionPackage[companyName];
-      let total = 0;
+      let packageDetail;
 
       if (companyPackage && companyPackage[advType]) {
-        total = runPromotionFunction({ promotionType: Object.keys(companyPackage[advType])[0], companyAdvPackage: companyPackage[advType], originalPriceModule: advTypeMap[advType] });
+        packageDetail = runPromotionFunction({ promotionType: Object.keys(companyPackage[advType])[0], companyAdvPackage: companyPackage[advType], originalPriceModule: advTypeMap[advType] });
       } else {
-        total = promotionFunction.getTotalOriginalPrice({ ...advTypeMap[advType] });
+        packageDetail = promotionFunction.getTotalOriginalPrice({ ...advTypeMap[advType] });
       }
 
-      advTypeMap[advType].currentUnitPrice = convertToTwoDecimal(total / advTypeMap[advType].total);
-      grandTotal += total;
+      advTypeMap[advType] = {
+        ...advTypeMap[advType],
+        ...packageDetail
+      };
+
+      grandTotal += packageDetail.total;
     }
 
-    grandTotal = convertToTwoDecimal(grandTotal);
+    grandTotal = promotionFunction.convertToTwoDecimal(grandTotal);
 
     return res.status(200).send({ grandTotal, advTypeMap });
   } catch (err) {

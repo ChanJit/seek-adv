@@ -1,25 +1,56 @@
-function getTotalOriginalPrice({ total, originalPrice }) {
-  return total * originalPrice;
+function getTotalOriginalPrice({ totalUnit, originalPrice }) {
+  return {
+    total: totalUnit * originalPrice,
+    originalPrice,
+    discountPrice: originalPrice
+  };
 }
 
-function bundle({ statement, total, originalPrice }) {
+function convertToTwoDecimal(number) {
+  return parseFloat((Math.round(number * 100) / 100).toFixed(2));
+}
+
+function bundle({ statement, totalUnit, originalPrice }) {
   const { unitPurchase, unitPrice } = statement;
-  const modValue = total % unitPurchase;
-  const dividValue = parseInt(total / unitPurchase);
-  return (dividValue > 0) ? (unitPrice * originalPrice * dividValue + modValue * originalPrice) : getTotalOriginalPrice({ total, originalPrice });
+  const originalPriceUnit = totalUnit % unitPurchase;
+  const dividValue = parseInt(totalUnit / unitPurchase);
+  return {
+    total: (dividValue > 0) ?
+      (unitPrice * originalPrice * dividValue + originalPriceUnit * originalPrice) :
+      getTotalOriginalPrice({ totalUnit, originalPrice }).total,
+    originalPriceUnit,
+    type: 'bundle',
+    discountPrice: (dividValue > 0) ? convertToTwoDecimal((unitPrice * originalPrice) / unitPurchase) : originalPrice,
+    originalPrice
+  };
 }
 
-function cheaperForMore({ statement, total, originalPrice }) {
-  return total >= statement.minItem ? statement.price * total : getTotalOriginalPrice({ total, originalPrice });
+function cheaperForMore({ statement, totalUnit, originalPrice }) {
+  return {
+    total: (totalUnit >= statement.minItem) ?
+      statement.price * totalUnit :
+      getTotalOriginalPrice({ totalUnit, originalPrice }).total,
+    discountPrice: (totalUnit >= statement.minItem) ?
+      statement.price :
+      originalPrice,
+    type: 'cheaperForMore',
+    originalPrice
+  };
 }
 
-function specialPrice({statement, total}) {
-  return statement.price * total;
+function specialPrice({ statement, totalUnit, originalPrice }) {
+  return {
+    total: statement.price * totalUnit,
+    discountPrice: statement.price,
+    type: 'specialPrice',
+    originalPrice
+  };
 }
 
 export default {
   'bundle': bundle,
   'cheaperForMore': cheaperForMore,
   'specialPrice': specialPrice,
-  'getTotalOriginalPrice': getTotalOriginalPrice
+  'getTotalOriginalPrice': getTotalOriginalPrice,
+  'convertToTwoDecimal': convertToTwoDecimal
 };
