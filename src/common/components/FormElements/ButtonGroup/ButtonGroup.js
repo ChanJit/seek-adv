@@ -70,7 +70,7 @@ export default class ButtonGroup extends Component {
           <label className={styles.label} htmlFor={fieldId}>{label}</label>
         </div>
         <div className={styles.root}
-          {...omit(this.props, 'options', constants.REDUX_FORM_PROPS)}
+          {...omit(this.props, 'options', 'fieldId', 'validationMessages', constants.REDUX_FORM_PROPS)}
           value={selectedOption}>
           {
             options.map(option =>
